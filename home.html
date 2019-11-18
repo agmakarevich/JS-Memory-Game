@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="body">
+<div class="game-form" id="gameForm">
+    <label>
+        <strong>Ваше имя:</strong>
+        <input type="text" id="userName" default="" placeholder="Ваше имя" value="test">
+        <span class="error">Введите Ваше Имя</span>
+    </label>
+    <label>
+        <strong>Кол-во уникальных карточек:</strong>
+        <input type="number" id="gameCardNumber" value="10" default="10">
+        <span class="error">Введите число от 10 до 650</span>
+    </label>
+    <button type="button"  id="startBtn" >Начать игру!</button>
+</div>
+<div class="game hidden" id="gameField"></div>
+<div class="game-modal hidden" id="gameEndModal"></div>
+<script type="module" src="js/game.js"></script>
+</body>
+</html>
