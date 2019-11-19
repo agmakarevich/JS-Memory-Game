@@ -169,6 +169,8 @@ class Game {
     const game = this;
     updateScoreNode(this.gameDetails);
     closeBtn.addEventListener('click', function () {
+      game.nodes.nameField.value = '';
+      game.nodes.cardsField.value = '';
       game.showGameForm();
     })
   }
