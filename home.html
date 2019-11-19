@@ -8,18 +8,21 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body class="body">
-<div class="game-form" id="gameForm">
-    <label>
-        <strong>Ваше имя:</strong>
-        <input type="text" id="userName" default="" placeholder="Ваше имя" value="test">
-        <span class="error">Введите Ваше Имя</span>
-    </label>
-    <label>
-        <strong>Кол-во уникальных карточек:</strong>
-        <input type="number" id="gameCardNumber" value="10" default="10">
-        <span class="error">Введите число от 10 до 650</span>
-    </label>
-    <button type="button"  id="startBtn" >Начать игру!</button>
+<div id="gameForm">
+    <div class="game-form">
+        <label>
+            <strong>Ваше имя:</strong>
+            <input type="text" id="userName" default="" placeholder="Ваше имя" value="">
+            <span class="error">Введите Ваше Имя</span>
+        </label>
+        <label>
+            <strong>Кол-во уникальных карточек:</strong>
+            <input type="number" id="gameCardNumber" value="" default="10" placeholder="Кол-во карт">
+            <span class="error">Введите число от 10 до 650</span>
+        </label>
+        <button type="button" id="startBtn">Начать игру!</button>
+    </div>
+    <div class="scores" id="scoreNode"></div>
 </div>
 <div class="game hidden" id="gameField"></div>
 <div class="game-modal hidden" id="gameEndModal"></div>

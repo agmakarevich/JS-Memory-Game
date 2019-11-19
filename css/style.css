@@ -4,6 +4,10 @@
     margin: 0
 }
 
+button:focus, button:active {
+    outline: none;
+}
+
 html, body {
     height: 100%;
     width: 100%;
@@ -84,12 +88,16 @@ html, body {
     width: 70%;
 }
 
+.game.locked {
+    pointer-events: none;
+}
+
 .gameItem {
     flex: 0 70px;
     height: 105px;
     margin: 5px;
     position: relative;
-    transition: transform 0.8s;
+    transition: transform 0.5s;
     transform-style: preserve-3d;
 }
 
@@ -167,4 +175,35 @@ html, body {
 
 .hidden {
     display: none !important;
+}
+
+.scores {
+    position: relative;
+    border: solid 1px #999;
+}
+
+.scores-title {
+    background: #ddd;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    border-bottom: solid 1px #999;
+    padding: 4px;
+}
+
+.scores-line {
+    font-size: 12px;
+    line-height: 14px;
+    border-bottom: solid 1px #ddd;
+    padding: 4px;
+    display: flex;
+}
+
+.scores-line span {
+    font-weight: 700;
+    margin-right: auto;
+}
+
+.scores-line:last-child {
+    border-bottom: none;
 }

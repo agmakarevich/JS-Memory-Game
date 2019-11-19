@@ -1,5 +1,50 @@
 import {getRandomIcons, maxIconCount} from "./icons.js";
 
+function updateScoreNode(gameDetails) {
+  const scoreNode = document.getElementById('scoreNode');
+  const newItem = gameDetails ? {name: gameDetails.userName, count: gameDetails.actionCounter} : null;
+  scoreNode.innerHTML = '';
+  let score = localStorage.score;
+  if (score) {
+    score = new Map(JSON.parse(score));
+    if (gameDetails) {
+      const curVal = score.get(gameDetails.totalCards);
+      if (curVal) {
+        score.set(gameDetails.totalCards, [...curVal, newItem]);
+      } else {
+        score.set(gameDetails.totalCards, [newItem]);
+      }
+      score.forEach(val => {
+        val.sort((a, b) => a.count <= b.count ? -1 : 1)
+      });
+      score = new Map([...score.entries()].sort((a, b) => b[0]-a[0]));
+    }
+  } else {
+    if (newItem) {
+      score = new Map();
+      score.set(gameDetails.totalCards, [newItem]);
+    }
+  }
+  if (score) {
+    localStorage.setItem('score', JSON.stringify([...score]));
+    score.forEach((val, key) => {
+      const title = document.createElement('div');
+      title.classList.add('scores-title');
+      title.innerHTML = `Рекорд для доски в  ${key} карт${key === 1 ? 'у' : ''}${key === 2 || key === 3 || key === 4 ? 'ы' : ''}`;
+      scoreNode.appendChild(title);
+      val.forEach(el => {
+        const line = document.createElement('div');
+        line.classList.add('scores-line');
+        line.innerHTML = `<span>${el.name}</span><i>${el.count}</i>`;
+        scoreNode.appendChild(line);
+      })
+    })
+  } else {
+    scoreNode.innerHTML = 'Список рековдов пуст';
+  }
+
+}
+
 class Game {
   gameDetails = {
     userName: null,
@@ -7,7 +52,6 @@ class Game {
     openCards: 0,
     actionCounter: 0
   };
-
   nodes = {
     gamePlace: null,
     form: null,
@@ -47,7 +91,7 @@ class Game {
     const nameValue = this.nodes.nameField.value;
     const cardsValue = Number(this.nodes.cardsField.value);
     const isNameValid = !!nameValue;
-    const isCountValid = !isNaN(cardsValue) && 1 <= cardsValue && cardsValue <= maxIconCount();
+    const isCountValid = !isNaN(cardsValue) && 10 <= cardsValue && cardsValue <= maxIconCount();
 
     this.gameDetails.userName = nameValue;
     this.gameDetails.totalCards = cardsValue;
@@ -87,9 +131,14 @@ class Game {
           this.showEndModal()
         }
       } else {
-        selected.classList.remove('open');
-        this.activeCard.classList.remove('open');
-        this.activeCard = null;
+        const game = this;
+        this.nodes.gamePlace.classList.add('locked');
+        setTimeout(function () {
+          selected.classList.remove('open');
+          game.activeCard.classList.remove('open');
+          game.nodes.gamePlace.classList.remove('locked');
+          game.activeCard = null;
+        }, 1000);
       }
     } else {
       this.gameDetails.actionCounter++;
@@ -118,6 +167,7 @@ class Game {
     closeBtn.innerHTML = 'Закрыть';
     this.nodes.modal.append(closeBtn);
     const game = this;
+    updateScoreNode(this.gameDetails);
     closeBtn.addEventListener('click', function () {
       game.showGameForm();
     })
@@ -127,4 +177,5 @@ class Game {
 document.getElementById('startBtn').addEventListener('click', function () {
   new Game();
 });
+updateScoreNode();
 
