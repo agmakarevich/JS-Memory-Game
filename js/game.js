@@ -30,7 +30,7 @@ function updateScoreNode(gameDetails) {
     score.forEach((val, key) => {
       const title = document.createElement('div');
       title.classList.add('scores-title');
-      title.innerHTML = `Рекорд для доски в  ${key} карт${key === 1 ? 'у' : ''}${key === 2 || key === 3 || key === 4 ? 'ы' : ''}`;
+      title.innerHTML = `Рекорд для доски в ${key} карт`;
       scoreNode.appendChild(title);
       val.forEach(el => {
         const line = document.createElement('div');
@@ -132,11 +132,11 @@ class Game {
         }
       } else {
         const game = this;
-        this.nodes.gamePlace.classList.add('locked');
+        this.nodes.gamePlace.classList.add('lock-game');
         setTimeout(function () {
           selected.classList.remove('open');
           game.activeCard.classList.remove('open');
-          game.nodes.gamePlace.classList.remove('locked');
+          game.nodes.gamePlace.classList.remove('lock-game');
           game.activeCard = null;
         }, 1000);
       }
